@@ -135,13 +135,14 @@ class InstallENANetworking(Task):
 
     @classmethod
     def run(cls, info):
-        version = '1.0.0'
+        version = '1.2.0'
+        branch = 'ena_linux_1.2.0'
         drivers_url = 'https://github.com/amzn/amzn-drivers'
         module_path = os.path.join(info.root, 'usr', 'src',
                                    'amzn-drivers-%s' % (version))
 
         from bootstrapvz.common.tools import log_check_call
-        log_check_call(['git', 'clone', drivers_url, module_path])
+        log_check_call(['git', 'clone', '--branch', branch, drivers_url, module_path])
 
         with open(os.path.join(module_path, 'dkms.conf'), 'w') as dkms_conf:
             dkms_conf.write("""PACKAGE_NAME="ena"
